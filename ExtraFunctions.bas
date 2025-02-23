@@ -40,3 +40,18 @@ Function ndim(arrInput() As Double) As Integer
 err:
     ndim = i - 1
 End Function
+Function size(arrInput() As Double) As Long
+    Dim lngSize As Long
+    
+    Dim intDimension As Integer
+    
+    For i = 1 To ndim(arrInput())
+        If i = 1 Then
+            lngSize = UBound(arrInput(), 1)
+        Else
+            lngSize = lngSize * UBound(arrInput(), i)
+        End If
+    Next
+
+    size = lngSize
+End Function

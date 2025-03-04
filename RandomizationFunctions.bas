@@ -48,7 +48,7 @@ Function Exponential(beta As Double) As Double
 End Function
 Function Bytes(n As Long) As Variant
     Dim i As Integer
-    Dim ByteArray() As Bytes
+    Dim ByteArray() As Byte
     
     ReDim ByteArray(1 To n)
     

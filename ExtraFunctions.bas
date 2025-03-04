@@ -1,57 +1,105 @@
 Attribute VB_Name = "ExtraFunctions"
-Function intTuple(ParamArray values() As Variant) As Integer()
-'As VBA cannot handle tuples, we need to have this function to take the input and interpret it as a collection
-'This function will be used to pass a tuple of integers, have to do a check to see if each input is an integer, otherwise throw an error
+Public Function NumberArray(ParamArray values() As Variant) As Long()
     On Error GoTo err
     
-    Dim arrTupleInt() As Integer
-    ReDim arrTupleInt(0 To UBound(values))
+    Dim arrResult() As Long
+    ReDim arrResult(UBound(values))
     
     Dim i As Integer
-    For i = LBound(values) To UBound(values)
+    For i = 0 To UBound(values)
         If VarType(values(i)) <> 2 And VarType(values(i)) <> 5 Then
             MsgBox "All input values must be Integers!"
             Exit Function
         End If
         
-        arrTupleInt(i) = CInt(values(i))
+        arrResult(i) = CLng(values(i))
     Next i
 
-     
-     intTuple = arrTupleInt()
+    NumberArray = arrResult()
     Exit Function
 err:
     Debug.Print err.Number & ":" & err.Description
 End Function
-Function ndim(arrInput() As Double) As Integer
-'returns the number of dimensions of an array.
-    On Error GoTo err
-    Dim intDimensions As Integer
+Public Function IsVector(ByRef arr As Variant) As Boolean
+    ' Check if array is 1-dimensional
+    Dim Dimensions As Long
+    On Error GoTo ErrorHandler
     
+
+    IsVector = (nDim(arr) = 1)
+    Exit Function
+    
+ErrorHandler:
+    IsVector = False
+End Function
+
+Public Function IsMatrix(ByRef arr As Variant) As Boolean
+    ' Check if array is 2-dimensional
+    Dim Dimensions As Long
+    On Error GoTo ErrorHandler
+    
+    IsMatrix = (nDim(arr) = 2)
+    Exit Function
+    
+ErrorHandler:
+    IsMatrix = False
+End Function
+
+Public Function JoinArray(ByRef arr As Variant, Optional Delimiter As String = ",") As String
     Dim i As Long
-    Dim intCheck As Integer
+    Dim result As String
+    If nDim(arr) > 0 Then
+        For i = LBound(arr) To UBound(arr)
+            If i = LBound(arr) Then
+                result = arr(i)
+            Else
+                result = result & Delimiter & arr(i)
+            End If
+        Next i
+    Else
+        result = arr
+    End If
+    JoinArray = result
+End Function
+Public Function Min(ParamArray values() As Variant) As Variant
+    Dim i As Long
+    Dim currentMin As Variant
     
-    For i = 1 To 5 'for now let's handle up to 5 dimensions
-        intCheck = LBound(arrInput, i)
+    If LBound(values) > UBound(values) Then
+        Min = Empty
+        Exit Function
+    End If
+
+    currentMin = values(0)
+    
+    For i = LBound(values) + 1 To UBound(values)
+        If IsNumeric(values(i)) Then
+            If IsEmpty(currentMin) Or values(i) < currentMin Then
+                currentMin = values(i)
+            End If
+        End If
     Next i
     
-    ndim = 5
-    Exit Function
-err:
-    ndim = i - 1
+    Min = currentMin
 End Function
-Function size(arrInput() As Double) As Long
-    Dim lngSize As Long
+Public Function Max(ParamArray values() As Variant) As Variant
+    Dim i As Long
+    Dim currentMax As Variant
     
-    Dim intDimension As Integer
-    
-    For i = 1 To ndim(arrInput())
-        If i = 1 Then
-            lngSize = UBound(arrInput(), 1)
-        Else
-            lngSize = lngSize * UBound(arrInput(), i)
-        End If
-    Next
+    If LBound(values) > UBound(values) Then
+        Min = Empty
+        Exit Function
+    End If
 
-    size = lngSize
+    currentMax = values(0)
+    
+    For i = LBound(values) + 1 To UBound(values)
+        If IsNumeric(values(i)) Then
+            If IsEmpty(currentMin) Or values(i) > currentMax Then
+                currentMax = values(i)
+            End If
+        End If
+    Next i
+    
+    Max = currentMax
 End Function

@@ -26,7 +26,7 @@ Function Gumbel(Mu As Double, Optional Beta As Double = 1) As Double
     
     Gumbel = Mu - Beta * Log(-1 * Log(u))
 End Function
-Function Binomial(n As Integer, p As Double) As Double
+Function Binomial(n As Long, p As Double) As Double
 'n = Number of times test is run, p = chance of success; should be 0<p<1
     Dim i As Integer, successes As Integer
     count = 0

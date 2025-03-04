@@ -16,7 +16,7 @@ End Function
 Public Function Random(Optional intSize As Long = 1) As Double
     Random = Rnd() * intSize
 End Function
-Function Gumbel(Mu As Double, Optional Beta As Double = 1) As Double
+Function Gumbel(mu As Double, Optional beta As Double = 1) As Double
 'Mu = Location; beta = Scale
     Randomize
     Dim u As Double
@@ -24,7 +24,7 @@ Function Gumbel(Mu As Double, Optional Beta As Double = 1) As Double
     
     If u = 0 Then u = 0.0000001
     
-    Gumbel = Mu - Beta * Log(-1 * Log(u))
+    Gumbel = mu - beta * Log(-1 * Log(u))
 End Function
 Function Binomial(n As Long, p As Double) As Double
 'n = Number of times test is run, p = chance of success; should be 0<p<1
@@ -37,6 +37,34 @@ Function Binomial(n As Long, p As Double) As Double
         End If
     Next i
     Binomial = successes
+End Function
+Function Exponential(beta As Double) As Double
+    Dim u As Double
+    u = Rnd()
+    
+    If u = 0 Then u = 0.0000001
+    
+    Exponential = -beta * Log(u)
+End Function
+Function Bytes(n As Long) As Variant
+    Dim i As Integer
+    Dim ByteArray() As Bytes
+    
+    ReDim ByteArray(1 To n)
+    
+    For i = 1 To n
+        ByteArray(i) = Int(Rnd() * 256)
+    Next i
+    
+    Bytes = ByteArray
+End Function
+Function Logistic(mu As Double, s As Double) As Double
+    Dim u As Double
+    u = Rnd()
+    
+    If u = 1 Then u = 0.999999
+    
+    Logistic = mu + s * Log((u / (1 - u)))
 End Function
 Function Hypergeometric(nGood As Long, nBad As Long, nSample As Long) As Long
     Dim RemainingGood As Long

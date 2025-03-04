@@ -5,7 +5,7 @@ This projects consists of a number of modules to generate Arrays in VBA as well 
 
 So far it consists of various functions to build arrays in VBA as well as some Windowing functions and functions to generate random numbers based on different distributions.
 
-For example, to declare a 4D Array filedl with zeros [Use NumberArray(n1,n2...,n#) as an equivilent to tuples]
+For example, to declare a 4D Array filed with zeros [Use NumberArray(n1,n2...,n#) as an equivilent to tuples]
 ```
 Sub declareZeroArray()
     Dim ZeroArray() As Double

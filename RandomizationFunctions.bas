@@ -16,4 +16,13 @@ End Function
 Public Function Random(Optional intSize As Integer = 1) As Double
     Random = Rnd()
 End Function
+Function Gumbel(Mu As Double, Beta As Double) As Double
+'Mu = Location; beta = Scale
+    Dim u As Double
+    u = Rnd(0)
+    
+    If u = 0 Then u = 0.0000001
+    
+    Gumbel = Mu - Beta * Log(-1 * Log(u))
+End Function
 

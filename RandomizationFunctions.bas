@@ -38,3 +38,23 @@ Function Binomial(n As Long, p As Double) As Double
     Next i
     Binomial = successes
 End Function
+Function Hypergeometric(nGood As Long, nBad As Long, nSample As Long) As Long
+    Dim RemainingGood As Long
+    Dim RemainingTotal As Long
+    Dim numSelected As Long
+    
+    Dim i As Long
+    
+    RemainingGood = nGood
+    RemainingTotal = nGood + nBad
+    
+    For i = 1 To nSample
+        If Rnd() < (RemainingGood / RemainingTotal) Then
+            numSelected = numSelected + 1
+            RemainingGood = RemainingGood - 1
+        End If
+        RemainingTotal = RemainingTotal - 1
+    Next
+    
+    Hypergeometric = numSelected
+End Function
